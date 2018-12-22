@@ -4,10 +4,10 @@ My Rasperry Pi Fluidsynth Box Project
 Running on  a Pi Zero, with a 16x2 LCD Display and a single rotary encoder as an interface
 
 Depends on:
-pyFluidSynth
-RPLCD
-RPi.GPIO
-pyky040
+- pyFluidSynth
+- RPLCD
+- RPi.GPIO
+- pyky040
 
 --------
 
