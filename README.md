@@ -3,7 +3,7 @@ My Rasperry Pi Fluidsynth Box Project
 
 Running on  a Pi Zero, with a 16x2 LCD Display and a single rotary encoder as an interface
 
-Ran on a Pi with [AutoAconnect]() running in the background
+Ran on a Pi with [AutoAconnect](https://github.com/Septolum/AutoAconnect) running in the background
 
 Best results achieved when run as superuser
 
