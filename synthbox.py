@@ -106,11 +106,7 @@ my_encoder.setup(scale_min=1, scale_max=100, step=1, loop=True, inc_callback=my_
 ### End Rotary Encoder Setup ###
 
 
-
-#print(fs.channel_info(0))
-#fs.program_select(0, sfid, 0, 127)
-print(fs.channel_info(0))
-
+currPatchName = fs.channel_info(0)[3].decode("utf-8")
 writeLCD(currPatchName, 'Bank ' + str(currBank) + ' Patch ' + str(currPatch))
 
 my_encoder.watch()
