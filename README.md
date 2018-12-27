@@ -11,6 +11,7 @@ Crontab friendly command: `sudo su -c 'sudo -E ./synthbox.py' pi`
 
 Depends on:
 - pyFluidSynth
+- sf2utils
 - RPLCD
 - RPi.GPIO
 - pyky040
