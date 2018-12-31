@@ -7,7 +7,7 @@ Ran on a Pi with [AutoAconnect](https://github.com/Septolum/AutoAconnect) runnin
 
 Best results achieved when run as superuser
 
-Crontab friendly command: `sudo su -c 'sudo -E ./synthbox.py' pi`
+Crontab friendly command: `sudo su -c 'sudo -E /home/pi/synthbox/synthbox.py' pi`
 
 Depends on:
 - pyFluidSynth
