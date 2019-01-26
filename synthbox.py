@@ -11,7 +11,7 @@ bankpatchlist = []
 ### SF2 Handling Setup ###
 from sf2utils.sf2parse import Sf2File
 
-def setSF2bankpatchlist(sf2path: str):
+def getSF2bankpatchlist(sf2path: str):
 	"""
 	Gets a nested list of the banks and patches in use by the soundfont
 	(yes it's a horribly nested one liner, but it works)
@@ -133,7 +133,7 @@ my_encoder.setup(scale_min=1, scale_max=100, step=1, loop=True, inc_callback=my_
 
 ### End Rotary Encoder Setup ###
 
-bankpatchlist = getsf2bankpatchlist(currSF2Path)
+bankpatchlist = getSF2bankpatchlist(currSF2Path)
 
 currPatchName = fs.channel_info(channel)[3].decode("utf-8")
 writeLCD(currPatchName, 'Bank ' + str(currBank) + ' Patch ' + str(currPatch))
