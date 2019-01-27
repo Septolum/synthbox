@@ -129,21 +129,49 @@ def writeLCD(firstline: str, secondline: str):
 
 ### End LCD Setup ###
 
+### Menu Management Setup ###
+
+menu = {
+	"Bank/Patch Num":"",
+	"Effects":{
+		"Gain":"",
+		"Reverb":"",
+		"Chorus":""},
+	"Midi Channel":"",
+	"Midi Transpose":"",
+	"Midi Routing":"",
+	"Change Soundfont":"",
+	"Power":{
+		"Reconnect Audio Device":"",
+		"Shutdown Safely":"",
+		"Restart":""}}
+
+def menuManager(command: str):
+	pass
+
+### End Menu Management Setup ###
+
 ### Rotary Encoder Setup ###
 from pyky040 import pyky040
 
 def my_inccallback(scale_position):
 	if scale_position%2 == 0: # Trigger every 2 'rotations' as my rotary encoder sends 2 per 1 physical click
-		patchInc()
-		writeLCD(currPatchName, 'Bank ' + str(currBank) + ' Patch ' + str(currPatch))
+		if not inMenu:
+			patchInc()
+			writeLCD(currPatchName, 'Bank ' + str(currBank) + ' Patch ' + str(currPatch))
+		else:
+			menuManager("Inc")
 
 def my_deccallback(scale_position):
 	if scale_position%2 == 0:
-		patchDec()
-		writeLCD(currPatchName, 'Bank ' + str(currBank) + ' Patch ' + str(currPatch))
+		if not inMenu:
+			patchDec()
+			writeLCD(currPatchName, 'Bank ' + str(currBank) + ' Patch ' + str(currPatch))
+		else:
+			menuManager("Dec")
 
 def my_swcallback():
-	return
+	menuManager("Sw")
 
 my_encoder = pyky040.Encoder(CLK=17, DT=18, SW=27)
 #GPIO.BOARD: CLK=11, DT=12, SW=13
