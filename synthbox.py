@@ -9,7 +9,7 @@ currPatch = 0
 bankpatchlist = []
 inMenu = False
 
-### SF2 Handling Setup ###
+#region ### SF2 Handling Setup ###
 from sf2utils.sf2parse import Sf2File
 
 def getSF2bankpatchlist(sf2path: str):
@@ -40,9 +40,9 @@ def switchSF2(sf2path:str, channel: int, bank: int, patch: int):
 	currPatchName = fs.channel_info(currChannel)[3].decode("utf-8")
 	fs.program_select(currChannel, sfid, currBank, currPatch)
 
-### SF2 Handling Setup End ####
+#endregion ### End SF2 Handling Setup ###
 
-### FluidSynth Setup ###
+#region ### FluidSynth Setup ###
 fs = fluidsynth.Synth()
 fs.setting('synth.polyphony', 32)
 fs.setting('audio.period-size', 6)
@@ -99,9 +99,9 @@ def patchDec():
 	currPatchName = fs.channel_info(currChannel)[3].decode("utf-8")
 	print(fs.channel_info(currChannel))
 
-### End FluidSynth Setup ###
+#endregion ### End FluidSynth Setup ###
 
-### LCD Setup ###
+#region ### LCD Setup ###
 from RPLCD.gpio import CharLCD
 import RPi.GPIO as GPIO
 
@@ -127,9 +127,9 @@ def writeLCD(firstline: str, secondline: str):
 			secondline = secondline[0:16]
 	lcd.write_string(firstline + '\n\r' + secondline)
 
-### End LCD Setup ###
+#endregion ### End LCD Setup ###
 
-### Menu Management Setup ###
+#region ### Menu Management Setup ###
 
 menu = {
 	"Bank/Patch Num":"",
@@ -149,9 +149,9 @@ menu = {
 def menuManager(command: str):
 	pass
 
-### End Menu Management Setup ###
+#endregion ### End Menu Management Setup ###
 
-### Rotary Encoder Setup ###
+#region ### Rotary Encoder Setup ###
 from pyky040 import pyky040
 
 def my_inccallback(scale_position):
@@ -180,9 +180,9 @@ my_encoder = pyky040.Encoder(CLK=17, DT=18, SW=27)
 my_encoder.setup(scale_min=1, scale_max=100, step=1, loop=True, inc_callback=my_inccallback, dec_callback=my_deccallback, sw_callback=my_swcallback)
 
 
-### End Rotary Encoder Setup ###
+#endregion ### End Rotary Encoder Setup ###
 
-### Background Bank & Patch Setup ###
+#region ### Background Bank & Patch Setup ###
 # This is needed because midi devices can request bank and patch changes themselves, and it's probably easier doing this than intercepting the raw midi calls and handling them oursleves
 import threading
 
@@ -207,7 +207,7 @@ def bgBankPatchCheck():
 bg_thread = threading.Thread(target=bgBankPatchCheck)
 bg_thread.start()
 
-### End Background Bank & Patch Setup ###
+#endregion ### End Background Bank & Patch Setup ###
 
 
 #bankpatchlist = getSF2bankpatchlist(currSF2Path)
