@@ -204,7 +204,7 @@ def bgBankPatchCheck():
 				writeLCD(currPatchName, 'Bank ' + str(currBank) + ' Patch ' + str(currPatch))
 		time.sleep(0.1)
 
-bg_thread = threading.Thread(target=bgBankPatchCheck)
+bg_thread = threading.Thread(target=bgBankPatchCheck, daemon=True)
 bg_thread.start()
 
 #endregion ### End Background Bank & Patch Setup ###
