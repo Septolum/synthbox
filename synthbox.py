@@ -62,9 +62,6 @@ def patchInc():
 	Finds next non empty patch, moving to the next bank if needs be.
 	Max bank 128 before it loops around to 0.
 	'''
-	global currPatchName
-	global currBank
-	global currPatch
 	currBank = fs.channel_info(currChannel)[1]
 	currPatch = fs.channel_info(currChannel)[2]
 	currIndex = bankpatchlist.index([currBank, currPatch])
@@ -75,7 +72,6 @@ def patchInc():
 		currIndex += 1
 	[currBank, currPatch] = bankpatchlist[currIndex]
 	fs.program_select(currChannel, sfid, currBank, currPatch)
-	currPatchName = fs.channel_info(currChannel)[3].decode("utf-8")
 	print(fs.channel_info(currChannel))
 
 def patchDec():
@@ -83,9 +79,6 @@ def patchDec():
 	Finds previous non empty patch, moving to the previous bank if needs be.
 	Max bank 128 after looping around from 0.
 	'''
-	global currPatchName
-	global currBank
-	global currPatch
 	currBank = fs.channel_info(currChannel)[1]
 	currPatch = fs.channel_info(currChannel)[2]
 	currIndex = bankpatchlist.index([currBank, currPatch])
@@ -96,7 +89,6 @@ def patchDec():
 		currIndex -= 1
 	[currBank, currPatch] = bankpatchlist[currIndex]
 	fs.program_select(currChannel, sfid, currBank, currPatch)
-	currPatchName = fs.channel_info(currChannel)[3].decode("utf-8")
 	print(fs.channel_info(currChannel))
 
 #endregion ### End FluidSynth Setup ###
@@ -158,7 +150,6 @@ def my_inccallback(scale_position):
 	if scale_position%2 == 0: # Trigger every 2 'rotations' as my rotary encoder sends 2 per 1 physical click
 		if not inMenu:
 			patchInc()
-			writeLCD(currPatchName, 'Bank ' + str(currBank) + ' Patch ' + str(currPatch))
 		else:
 			menuManager("Inc")
 
@@ -166,7 +157,6 @@ def my_deccallback(scale_position):
 	if scale_position%2 == 0:
 		if not inMenu:
 			patchDec()
-			writeLCD(currPatchName, 'Bank ' + str(currBank) + ' Patch ' + str(currPatch))
 		else:
 			menuManager("Dec")
 
