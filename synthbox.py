@@ -99,7 +99,9 @@ def patchDec():
 from RPLCD.gpio import CharLCD
 import RPi.GPIO as GPIO
 
-lcd = CharLCD(pin_rs=22, pin_e=23, pins_data=[9, 25, 11, 8], cols=16, rows=2, numbering_mode=GPIO.BCM)
+from RPLCD.codecs import A02Codec as LCDCodec #Change to A00 codec if you want to use japanese, and change it on the next line too
+
+lcd = CharLCD(pin_rs=22, pin_e=23, pins_data=[9, 25, 11, 8], cols=16, rows=2, numbering_mode=GPIO.BCM, charmap="A02")
 #GPIO.BOARD: pin_rs=15, pin_e=16, pins_data=[21, 22, 23, 24]
 
 def writeLCD(firstline: str, secondline: str):
@@ -131,7 +133,7 @@ def writeLCD(firstline: str, secondline: str):
 				#print("Move cursor to ({},{}) and write {}".format(str(i),str(j), "{:<16}".format(c[1])[j]))
 				if lcd.cursor_pos != (i, j):
 					lcd.cursor_pos = (i, j)
-				lcd.write(ord(c[1][j]))
+				lcd.write(LCDCodec().encode(c[1][j])[0])
 
 	lastLCDStr = [firstline, secondline]
 	#lcd.write_string(firstline + '\n\r' + secondline)
