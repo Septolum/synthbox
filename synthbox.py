@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 import fluidsynth, time
 
+lastLCDStr = ["                ", "                "]
+
 currChannel = 0
 currSF2Path = "/home/pi/GeneralUser GS 1.47/GeneralUser GS v1.47.sf2"
 currPatchName = ""
@@ -105,7 +107,8 @@ def writeLCD(firstline: str, secondline: str):
 	Writes 2 lines to a 16x2 LCD.
 	Shortens them by removing vowels if needed.
 	'''
-	lcd.clear()
+	global lastLCDStr
+	#lcd.clear()
 	if len(firstline) > 16:
 		for i in ['a','e','i','o','u']:
 			firstline = firstline.replace(i, '')
@@ -117,7 +120,21 @@ def writeLCD(firstline: str, secondline: str):
 			secondline = secondline.replace(i, '')
 		if len(secondline) > 16:
 			secondline = secondline[0:16]
-	lcd.write_string(firstline + '\n\r' + secondline)
+
+	#The following added to speed up lcd drawing times under heavy load
+	firstline = "{:<16}".format(firstline)
+	secondline = "{:<16}".format(secondline)
+
+	for i, c in enumerate([*zip(*[lastLCDStr, [firstline,secondline]])]):
+		for j, d in enumerate(c[0]):
+			if d != c[1][j]:
+				#print("Move cursor to ({},{}) and write {}".format(str(i),str(j), "{:<16}".format(c[1])[j]))
+				if lcd.cursor_pos != (i, j):
+					lcd.cursor_pos = (i, j)
+				lcd.write(ord(c[1][j]))
+
+	lastLCDStr = [firstline, secondline]
+	#lcd.write_string(firstline + '\n\r' + secondline)
 
 #endregion ### End LCD Setup ###
 
