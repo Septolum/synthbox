@@ -96,9 +96,15 @@ def patchDec():
 #endregion ### End FluidSynth Setup ###
 
 #region ### LCD Setup ###
-from RPLCD.gpio import CharLCD
-import RPi.GPIO as GPIO
+try:
+	import RPi.GPIO as GPIO
+except ImportError:
+	import sys
+	import FakeRPi
+	sys.modules['RPi'] = FakeRPi
+	import RPi.GPIO as GPIO
 
+from RPLCD.gpio import CharLCD
 from RPLCD.codecs import A02Codec as LCDCodec #Change to A00 codec if you want to use japanese, and change it on the next line too
 
 lcd = CharLCD(pin_rs=22, pin_e=23, pins_data=[9, 25, 11, 8], cols=16, rows=2, numbering_mode=GPIO.BCM, charmap="A02")
