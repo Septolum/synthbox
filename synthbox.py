@@ -4,12 +4,24 @@ import fluidsynth, time
 lastLCDStr = ["                ", "                "]
 
 currChannel = 0
-currSF2Path = "/home/pi/GeneralUser GS 1.47/GeneralUser GS v1.47.sf2"
+currSF2Path = ""
+SF2paths = {}
 currPatchName = ""
 currBank = 0
 currPatch = 0
 bankpatchlist = []
 inMenu = False
+
+#region ### File Handling Setup ###
+import os, sys
+os.chdir(os.path.dirname(sys.argv[0])) # change working directory to script's own directory
+for file in os.listdir(os.getcwd() + "/SF2"):
+	if file[-4:].lower() == ".sf2":
+		SF2paths.update({file[:-4]:(os.getcwd() + "/SF2/" + file)})
+#print(SF2paths)
+currSF2Path = SF2paths["GeneralUser GS v1.471"]
+
+#endregion ### File Handling Setup ###
 
 #region ### SF2 Handling Setup ###
 from sf2utils.sf2parse import Sf2File
